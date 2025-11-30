@@ -33,6 +33,14 @@ public class Ticket {
         return this.fechaHoraEntrada;
     }
 
+    public LocalDateTime getFechaHoraSalida() {
+        return this.fechaHoraSalida;
+    }
+
+    public int getMonto() {
+        return this.montoCobrado;
+    }
+
     public void setSalida(LocalDateTime fechaHoraSalida, int montoCobrado) {
         this.fechaHoraSalida = fechaHoraSalida;
         this.montoCobrado = montoCobrado;

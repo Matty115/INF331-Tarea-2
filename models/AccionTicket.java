@@ -20,10 +20,21 @@ public class AccionTicket {
         return this.cerrados.add(ticket);
     }
 
-    public Ticket getTicket(int id) {
-        for (Ticket ticket : this.abiertos) {
+    public Ticket getTicket(int id, boolean abierto) {
+        ArrayList<Ticket> listado;
+        if (abierto) listado = this.abiertos;
+        else listado = this.cerrados;
+        for (Ticket ticket : listado) {
             if (ticket.getID() == id) return ticket;
         }
         return null;
+    }
+
+    public ArrayList<Ticket> getAbiertos() {
+        return abiertos;
+    }
+
+    public ArrayList<Ticket> getCerrados() {
+        return cerrados;
     }
 }
