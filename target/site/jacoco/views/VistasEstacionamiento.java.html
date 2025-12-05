@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VistasEstacionamiento.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">inf331-tarea-2</a> &gt; <a href="index.source.html" class="el_package">views</a> &gt; <span class="el_source">VistasEstacionamiento.java</span></div><h1>VistasEstacionamiento.java</h1><pre class="source lang-java linenums">package views;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+import models.Ticket;
+
+public class VistasEstacionamiento {
+
+    private final Scanner sc;
+
+    public VistasEstacionamiento() {
+<span class="fc" id="L15">        this(System.in);</span>
+<span class="fc" id="L16">    }</span>
+
+<span class="fc" id="L18">    public VistasEstacionamiento(InputStream in) {</span>
+<span class="fc" id="L19">        this.sc = new Scanner(in);</span>
+<span class="fc" id="L20">    }</span>
+
+    public int menu() {
+
+<span class="fc" id="L24">        int opcion = 0;</span>
+<span class="fc" id="L25">        boolean valid = false;</span>
+
+<span class="fc bfc" id="L27" title="All 2 branches covered.">        while (!valid) {</span>
+            try {
+<span class="fc" id="L29">                System.out.println(&quot;=== Menú principal ===&quot;);</span>
+<span class="fc" id="L30">                System.out.println(&quot;1. Registrar entrada&quot;);</span>
+<span class="fc" id="L31">                System.out.println(&quot;2. Registrar salida&quot;);</span>
+<span class="fc" id="L32">                System.out.println(&quot;3. Lista de tickets abiertos&quot;);</span>
+<span class="fc" id="L33">                System.out.println(&quot;4. Lista de tickets cerrados&quot;);</span>
+<span class="fc" id="L34">                System.out.println(&quot;5. Recaudación del día&quot;);</span>
+<span class="fc" id="L35">                System.out.println(&quot;6. Salir&quot;);</span>
+<span class="fc" id="L36">                System.out.println(&quot;======================\n&quot;);</span>
+<span class="fc" id="L37">                System.out.print(&quot;Seleccione una opción: &quot;);</span>
+<span class="fc" id="L38">                opcion = sc.nextInt();</span>
+<span class="fc bfc" id="L39" title="All 4 branches covered.">                if (opcion &lt;= 0 || opcion &gt;= 7) System.out.println(&quot;Opción no válida. Intente de nuevo.&quot;);</span>
+<span class="fc" id="L40">                else valid = true;</span>
+<span class="fc" id="L41">            } catch (InputMismatchException e) {</span>
+<span class="fc" id="L42">                System.out.println(&quot;Opción no válida. Intente de nuevo.&quot;);</span>
+            }
+<span class="fc" id="L44">            sc.nextLine(); // Limpia el buffer</span>
+<span class="fc" id="L45">            System.out.println();</span>
+        }
+        
+<span class="fc" id="L48">        return opcion;</span>
+    }
+
+    public String solicitarPatente() {
+<span class="fc" id="L52">        String patente = &quot;&quot;;</span>
+<span class="fc" id="L53">        boolean valid = false;</span>
+
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        while (!valid) {</span>
+<span class="fc" id="L56">            System.out.println(&quot;Formato esperado: LLDDDD o LLLLDD, L es letra, D es dígito.&quot;);</span>
+<span class="fc" id="L57">            System.out.println(&quot;Ejemplos: JD3289 o FEUW28.&quot;);</span>
+<span class="fc" id="L58">            System.out.println(&quot;Ingrese 0 para anular la operación.&quot;);</span>
+<span class="fc" id="L59">            System.out.print(&quot;Ingrese patente del vehículo entrante: &quot;);</span>
+<span class="fc" id="L60">            patente = sc.nextLine().toUpperCase();</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">            if (patente.matches(&quot;^[A-Z]{4}\\d{2}$&quot;) || </span>
+<span class="fc bfc" id="L62" title="All 4 branches covered.">                patente.matches(&quot;^[A-Z]{2}\\d{4}$&quot;) || patente.equals(&quot;0&quot;)) valid = true;</span>
+<span class="fc" id="L63">            else System.out.println(&quot;Opción no válida. Intente de nuevo.&quot;);</span>
+<span class="fc" id="L64">            System.out.println();</span>
+        }
+
+<span class="fc" id="L67">        return patente;</span>
+    }
+
+    public String solicitarTipo() {
+<span class="fc" id="L71">        String tipo = &quot;&quot;;</span>
+<span class="fc" id="L72">        boolean valid = false;</span>
+
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        while (!valid) {</span>
+<span class="fc" id="L75">            System.out.print(&quot;Ingrese tipo de vehículo (auto/moto/camioneta): &quot;);</span>
+<span class="fc" id="L76">            tipo = sc.nextLine().toUpperCase();</span>
+<span class="fc bfc" id="L77" title="All 4 branches covered.">            if (tipo.equals(&quot;AUTO&quot;) || tipo.equals(&quot;MOTO&quot;) || </span>
+<span class="fc bfc" id="L78" title="All 4 branches covered.">                tipo.equals(&quot;CAMIONETA&quot;) || tipo.equals(&quot;0&quot;)) valid = true;</span>
+<span class="fc" id="L79">            else System.out.println(&quot;Opción no válida. Intente de nuevo.&quot;);</span>
+<span class="fc" id="L80">            System.out.println();</span>
+        }
+
+<span class="fc" id="L83">        return tipo;</span>
+    }
+
+    public int solicitarID(ArrayList&lt;Ticket&gt; tickets, boolean exit) {
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        if (tickets.size() == 0) {</span>
+<span class="fc" id="L88">            System.out.println(&quot;No hay tickets abiertos de momento.&quot;);</span>
+<span class="fc" id="L89">            return 0;</span>
+        }
+<span class="fc" id="L91">        int id = 0;</span>
+<span class="fc" id="L92">        boolean valid = false;</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">        if (exit) System.out.println(&quot;=== Cierre de Tickets ===&quot;);</span>
+<span class="fc" id="L94">        else System.out.println(&quot;=== Lista de Tickets ===&quot;);</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">        for (Ticket ticket : tickets) {</span>
+<span class="fc" id="L96">            System.out.println(&quot;ID: &quot; + ticket.getID() + &quot;  |  Patente: &quot; + ticket.getPatente());</span>
+        }
+<span class="fc bfc" id="L98" title="All 2 branches covered.">        if (exit) System.out.println(&quot;=========================&quot;);</span>
+<span class="fc" id="L99">        else System.out.println(&quot;========================&quot;);</span>
+
+<span class="fc bfc" id="L101" title="All 2 branches covered.">        while (!valid) {</span>
+            try {
+<span class="fc" id="L103">                System.out.println(&quot;\nIngrese 0 para anular la operación.&quot;);</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">                if (exit) System.out.print(&quot;Ingrese ID del ticket del vehículo saliente: &quot;);</span>
+<span class="fc" id="L105">                else System.out.print(&quot;Ingrese ID del ticket para revisar su detalle: &quot;);</span>
+
+<span class="fc" id="L107">                id = sc.nextInt();</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">                if (id &gt;= 0) valid = true;</span>
+<span class="fc" id="L109">                else System.out.println(&quot;Opción no válida. Intente de nuevo.&quot;);</span>
+<span class="fc" id="L110">            } catch (InputMismatchException e) {</span>
+<span class="fc" id="L111">                System.out.println(&quot;Opción no válida. Intente de nuevo.&quot;);</span>
+            }
+<span class="fc" id="L113">            sc.nextLine();</span>
+<span class="fc" id="L114">            System.out.println();</span>
+        }
+
+<span class="fc" id="L117">        return id;</span>
+    }
+
+    public int mostrarDetalles(Ticket ticket, boolean abierto) {
+<span class="fc" id="L121">        int op = 0;</span>
+<span class="fc" id="L122">        System.out.println(&quot;=== Detalle de Ticket ===&quot;);</span>
+<span class="fc" id="L123">        System.out.println(&quot;ID: &quot; + ticket.getID());</span>
+<span class="fc" id="L124">        System.out.println(&quot;Patente: &quot; + ticket.getPatente());</span>
+<span class="fc" id="L125">        System.out.println(&quot;Tipo de vehículo: &quot; +ticket.getTipoVehiculo());</span>
+<span class="fc" id="L126">        System.out.println(&quot;Fecha y hora de acceso: &quot; + ticket.getFechaHoraEntrada());</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">        if (abierto) System.out.println(&quot;Estado: Abierto&quot;);</span>
+        else {
+<span class="fc" id="L129">            System.out.println(&quot;Fecha y hora de salida: &quot; + ticket.getFechaHoraSalida());</span>
+<span class="fc" id="L130">            System.out.println(&quot;Monto cobrado: $&quot; + ticket.getMonto());</span>
+<span class="fc" id="L131">            System.out.println(&quot;Estado: Cerrado&quot;);</span>
+        }
+<span class="fc" id="L133">        System.out.println(&quot;=========================\n&quot;);</span>
+
+        try {
+<span class="fc" id="L136">            System.out.println(&quot;Ingrese 0 para volver al menú.&quot;);</span>
+<span class="fc" id="L137">            System.out.println(&quot;Ingrese cualquier otra tecla si desea volver al listado.&quot;);</span>
+<span class="fc" id="L138">            System.out.print(&quot;Seleccione una opción: &quot;);</span>
+<span class="fc" id="L139">            op = sc.nextInt();</span>
+<span class="fc" id="L140">        } catch (InputMismatchException e) {</span>
+<span class="fc" id="L141">            op = -1;</span>
+        }
+<span class="fc" id="L143">        sc.nextLine();</span>
+<span class="fc" id="L144">        System.out.println();</span>
+<span class="fc" id="L145">        return op;</span>
+
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -1,5 +1,6 @@
 package views;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -8,7 +9,15 @@ import models.Ticket;
 
 public class VistasEstacionamiento {
 
-    private final Scanner sc = new Scanner(System.in);
+    private final Scanner sc;
+
+    public VistasEstacionamiento() {
+        this(System.in);
+    }
+
+    public VistasEstacionamiento(InputStream in) {
+        this.sc = new Scanner(in);
+    }
 
     public int menu() {
 

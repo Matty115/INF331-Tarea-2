@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AccionTicket.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">inf331-tarea-2</a> &gt; <a href="index.source.html" class="el_package">models</a> &gt; <span class="el_source">AccionTicket.java</span></div><h1>AccionTicket.java</h1><pre class="source lang-java linenums">package models;
+
+import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.Duration;
+
+<span class="fc" id="L8">public class AccionTicket {</span>
+<span class="fc" id="L9">    private ArrayList&lt;Ticket&gt; abiertos = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L10">    private ArrayList&lt;Ticket&gt; cerrados = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L11">    private int nIDS = 0;</span>
+
+    public int nuevaID() {
+<span class="fc" id="L14">        this.nIDS++;</span>
+<span class="fc" id="L15">        return this.nIDS;</span>
+    }
+
+    public int nuevaIDFail() {
+<span class="fc" id="L19">        this.nIDS--;</span>
+<span class="fc" id="L20">        return this.nIDS;</span>
+    }
+
+    public boolean abrirTicket(Ticket nuevo) {
+
+<span class="fc bfc" id="L25" title="All 2 branches covered.">        for (Ticket ticket : this.abiertos) {</span>
+<span class="fc bfc" id="L26" title="All 2 branches covered.">            if (ticket.getPatente().equals(nuevo.getPatente())) return false;</span>
+        }
+<span class="fc" id="L28">        this.abiertos.add(nuevo);</span>
+<span class="fc" id="L29">        return true;</span>
+    }
+
+    public boolean cerrarTicket(Ticket ticket) {
+<span class="fc bfc" id="L33" title="All 2 branches covered.">        if (!this.abiertos.remove(ticket)) return false;</span>
+<span class="fc" id="L34">        return this.cerrados.add(ticket);</span>
+    }
+
+    public Ticket getTicket(int id, boolean abierto) {
+        ArrayList&lt;Ticket&gt; listado;
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        if (abierto) listado = this.abiertos;</span>
+<span class="fc" id="L40">        else listado = this.cerrados;</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        for (Ticket ticket : listado) {</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">            if (ticket.getID() == id) return ticket;</span>
+        }
+<span class="fc" id="L44">        return null;</span>
+    }
+
+    public ArrayList&lt;Ticket&gt; getAbiertos() {
+<span class="fc" id="L48">        return abiertos;</span>
+    }
+
+    public ArrayList&lt;Ticket&gt; getCerrados() {
+<span class="fc" id="L52">        return cerrados;</span>
+    }
+
+    public int calcularMonto(LocalDateTime entrada, LocalDateTime salida, String tipo) {
+        int monto;
+<span class="fc" id="L57">        long montoI = 0;</span>
+<span class="fc" id="L58">        long duracion = Duration.between(entrada, salida).toMinutes();</span>
+<span class="fc" id="L59">        long bloques = (duracion - 1) / 30 + 1;</span>
+
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        if (duracion == 0) return 0;</span>
+
+<span class="fc bfc" id="L63" title="All 4 branches covered.">        switch (tipo) {</span>
+            case &quot;AUTO&quot;:
+<span class="fc" id="L65">                montoI = 800 * bloques;</span>
+<span class="fc" id="L66">                break;</span>
+            case &quot;MOTO&quot;:
+<span class="fc" id="L68">                montoI = 500 * bloques;</span>
+<span class="fc" id="L69">                break;</span>
+            case &quot;CAMIONETA&quot;:
+<span class="fc" id="L71">                montoI = 1000 * bloques;</span>
+                break;
+        }
+
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        if (montoI &gt; 15000) monto = 15000;</span>
+<span class="fc" id="L76">        else monto = (int) montoI;</span>
+
+<span class="fc bfc" id="L78" title="All 2 branches covered.">        if (entrada.getDayOfWeek().getValue() &gt;= 6) monto = 9 * monto / 10;</span>
+
+<span class="fc" id="L80">        return monto;</span>
+    }
+
+    public int calcularDia(ArrayList&lt;Ticket&gt; cerrados) {
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        if (cerrados.size() == 0) return 0;</span>
+<span class="fc" id="L85">        int total = 0;</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        for (Ticket ticket : cerrados) {</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">            if (ticket.getFechaHoraSalida().toLocalDate().equals(LocalDate.now()))</span>
+<span class="fc" id="L88">                total += ticket.getMonto();</span>
+        }
+<span class="fc" id="L90">        return total;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
