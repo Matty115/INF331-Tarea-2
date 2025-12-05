@@ -152,6 +152,17 @@ public class AccionTicketTest {
     }
 
     @Test
+    public void calcularMontoNormalInexistente() {
+        AccionTicket accion = new AccionTicket();
+        int monto = accion.calcularMonto(
+            LocalDateTime.of(2025, 12, 4, 8, 0),
+            LocalDateTime.of(2025, 12, 4, 9, 15),
+            "lo que sea"
+        );
+        assertEquals(0, monto);
+    }
+
+    @Test
     public void calcularMonto0Minutos() {
         AccionTicket accion = new AccionTicket();
         int monto = accion.calcularMonto(

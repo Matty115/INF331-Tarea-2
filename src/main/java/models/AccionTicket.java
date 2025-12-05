@@ -70,6 +70,8 @@ public class AccionTicket {
             case "CAMIONETA":
                 montoI = 1000 * bloques;
                 break;
+            default:
+                return 0;
         }
 
         if (montoI > 15000) monto = 15000;
